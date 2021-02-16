@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Get Started with batchr</title>
+
+<script>// Hide empty <a> tag within highlighted CodeBlock for screen reader accessibility (see https://github.com/jgm/pandoc/issues/6352#issuecomment-626106786) -->
+// v0.0.1
+// Written by JooYoung Seo (jooyoung@psu.edu) and Atsushi Yasumoto on June 1st, 2020.
+
+document.addEventListener('DOMContentLoaded', function() {
+  const codeList = document.getElementsByClassName("sourceCode");
+  for (var i = 0; i < codeList.length; i++) {
+    var linkList = codeList[i].getElementsByTagName('a');
+    for (var j = 0; j < linkList.length; j++) {
+      if (linkList[j].innerHTML === "") {
+        linkList[j].setAttribute('aria-hidden', 'true');
+      }
+    }
+  }
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Get Started with batchr</h1>
+
+
+
+<p>Consider a temporary directory with four txt files</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>path &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">&quot;demo&quot;</span>)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">unlink</span>(path)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">dir.create</span>(path)</span>
+<span id="cb1-4"><a href="#cb1-4"></a></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="kw">writeLines</span>(<span class="st">&quot;the contents of file.txt&quot;</span>, <span class="kw">file.path</span>(path, <span class="st">&quot;file.txt&quot;</span>))</span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="kw">writeLines</span>(<span class="st">&quot;the contents of file2.txt&quot;</span>, <span class="kw">file.path</span>(path, <span class="st">&quot;file2.txt&quot;</span>))</span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="kw">writeLines</span>(<span class="st">&quot;the contents of file3.txt&quot;</span>, <span class="kw">file.path</span>(path, <span class="st">&quot;file3.txt&quot;</span>))</span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="kw">writeLines</span>(<span class="st">&quot;the contents of file4.txt&quot;</span>, <span class="kw">file.path</span>(path, <span class="st">&quot;file4.txt&quot;</span>))</span></code></pre></div>
+<p>and a function that will successfully process the first two files (in this case rewriting their contents) but fail for the last two by returning FALSE and throwing an error, respectively.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>fun &lt;-<span class="st"> </span><span class="cf">function</span>(file) {</span>
+<span id="cb2-2"><a href="#cb2-2"></a>  <span class="cf">if</span>(<span class="kw">grepl</span>(<span class="st">&quot;file3[.]txt$&quot;</span>, file)) <span class="kw">return</span>(<span class="ot">FALSE</span>)</span>
+<span id="cb2-3"><a href="#cb2-3"></a>  <span class="cf">if</span>(<span class="kw">grepl</span>(<span class="st">&quot;file4[.]txt$&quot;</span>, file)) <span class="kw">stop</span>(<span class="st">&quot;Uh, Houston, we&#39;ve had a problem.&quot;</span>, <span class="dt">call. =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb2-4"><a href="#cb2-4"></a>  txt &lt;-<span class="st"> </span><span class="kw">readLines</span>(file)</span>
+<span id="cb2-5"><a href="#cb2-5"></a>  txt &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;contents&quot;</span>, <span class="st">&quot;modified contents&quot;</span>, txt)</span>
+<span id="cb2-6"><a href="#cb2-6"></a>  <span class="kw">writeLines</span>(txt, file)</span>
+<span id="cb2-7"><a href="#cb2-7"></a>}</span></code></pre></div>
+<div id="configure" class="section level2">
+<h2>Configure</h2>
+<p>Now let the user configure the directory to only process files names that include a digit before the file extension.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">library</span>(batchr)</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="kw">print</span>(<span class="kw">batch_config</span>(fun, <span class="dt">path =</span> path, <span class="dt">regexp =</span> <span class="st">&quot;file</span><span class="ch">\\</span><span class="st">d[.]txt$&quot;</span>))</span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="co">#&gt; [1] &quot;file2.txt&quot; &quot;file3.txt&quot; &quot;file4.txt&quot;</span></span></code></pre></div>
+<p>The contents of the hidden figuration file are as follows</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">batch_config_read</span>(path)</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="co">#&gt; $time</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="co">#&gt; [1] &quot;2021-02-12 17:55:28 UTC&quot;</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="co">#&gt; </span></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="co">#&gt; $regexp</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="co">#&gt; [1] &quot;file\\d[.]txt$&quot;</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="co">#&gt; </span></span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="co">#&gt; $recurse</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="co">#&gt; [1] FALSE</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="co">#&gt; </span></span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="co">#&gt; $fun</span></span>
+<span id="cb4-12"><a href="#cb4-12"></a><span class="co">#&gt; function(file) {</span></span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="co">#&gt;   if(grepl(&quot;file3[.]txt$&quot;, file)) return(FALSE)</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="co">#&gt;   if(grepl(&quot;file4[.]txt$&quot;, file)) stop(&quot;Uh, Houston, we&#39;ve had a problem.&quot;, call. = FALSE)</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="co">#&gt;   txt &lt;- readLines(file)</span></span>
+<span id="cb4-16"><a href="#cb4-16"></a><span class="co">#&gt;   txt &lt;- gsub(&quot;contents&quot;, &quot;modified contents&quot;, txt)</span></span>
+<span id="cb4-17"><a href="#cb4-17"></a><span class="co">#&gt;   writeLines(txt, file)</span></span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="co">#&gt; }</span></span>
+<span id="cb4-19"><a href="#cb4-19"></a><span class="co">#&gt; </span></span>
+<span id="cb4-20"><a href="#cb4-20"></a><span class="co">#&gt; $dots</span></span>
+<span id="cb4-21"><a href="#cb4-21"></a><span class="co">#&gt; list()</span></span></code></pre></div>
+<p>The <code>time</code> value specifies the system time (in UTC) that the project was configured. It is very important because only files that were last modified <em>before</em> the configuration time are considered to be unprocessed (when a file is successfully processed its modification time is automatically set to the current system time).</p>
+</div>
+<div id="run" class="section level2">
+<h2>Run</h2>
+<p>With the directory configured the next task is to start processing the files</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">print</span>(<span class="kw">batch_run</span>(path, <span class="dt">ask =</span> <span class="ot">FALSE</span>))</span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="co">#&gt; file2.txt file3.txt file4.txt </span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="co">#&gt;      TRUE     FALSE     FALSE</span></span></code></pre></div>
+<p>From the output we can see that ‘file2.csv’ was processed successfully but processing of the other two files that matched regexp failed. The output is also recorded in a hidden log file that can be read using <code>batch_log_read()</code>.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">batch_log_read</span>(path)</span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="co">#&gt;      type         time      file                           message</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="co">#&gt; 1 SUCCESS 00:00:00.000 file2.txt                              &lt;NA&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="co">#&gt; 2 FAILURE 00:00:00.005 file3.txt                              &lt;NA&gt;</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="co">#&gt; 3 FAILURE 00:00:00.000 file4.txt Uh, Houston, we&#39;ve had a problem.</span></span></code></pre></div>
+<p>or summarised using</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">batch_report</span>(path)</span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="co">#&gt; ✓ file2.txt [00:00:00.000]</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="co">#&gt; x file3.txt [00:00:00.005]</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="co">#&gt; x file4.txt [00:00:00.000]</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="co">#&gt; Success: 1</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="co">#&gt; Failure: 2</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a><span class="co">#&gt; Remaining: 0</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="co">#&gt; </span></span></code></pre></div>
+<p>The contents of ‘file2.csv’ are now as follows</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">readLines</span>(<span class="kw">file.path</span>(path, <span class="st">&quot;file2.txt&quot;</span>))</span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="co">#&gt; [1] &quot;the modified contents of file2.txt&quot;</span></span></code></pre></div>
+</div>
+<div id="reconfigure" class="section level2">
+<h2>Reconfigure</h2>
+<p>At this point let us update the function and regular expression so that all files are included and successfully processed.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">batch_reconfig_fileset</span>(path, <span class="dt">regexp =</span> <span class="st">&quot;[.]txt$&quot;</span>)</span>
+<span id="cb9-2"><a href="#cb9-2"></a></span>
+<span id="cb9-3"><a href="#cb9-3"></a>fun &lt;-<span class="st"> </span><span class="cf">function</span>(file) {</span>
+<span id="cb9-4"><a href="#cb9-4"></a>  txt &lt;-<span class="st"> </span><span class="kw">readLines</span>(file)</span>
+<span id="cb9-5"><a href="#cb9-5"></a>  txt &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;contents&quot;</span>, <span class="st">&quot;modified contents&quot;</span>, txt)</span>
+<span id="cb9-6"><a href="#cb9-6"></a>  <span class="kw">writeLines</span>(txt, file)</span>
+<span id="cb9-7"><a href="#cb9-7"></a>}</span>
+<span id="cb9-8"><a href="#cb9-8"></a></span>
+<span id="cb9-9"><a href="#cb9-9"></a><span class="kw">batch_reconfig_fun</span>(path, fun)</span></code></pre></div>
+</div>
+<div id="rerun" class="section level2">
+<h2>Rerun</h2>
+<p>Now when we call <code>batch_run()</code> the newly included ‘file.txt’ is successfully processed.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">batch_run</span>(path, <span class="dt">ask =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw">batch_report</span>(path)</span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="co">#&gt; ✓ file.txt [00:00:00.000]</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="co">#&gt; ✓ file2.txt [00:00:00.000]</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="co">#&gt; x file3.txt [00:00:00.005]</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="co">#&gt; x file4.txt [00:00:00.000]</span></span>
+<span id="cb11-6"><a href="#cb11-6"></a><span class="co">#&gt; Success: 2</span></span>
+<span id="cb11-7"><a href="#cb11-7"></a><span class="co">#&gt; Failure: 2</span></span>
+<span id="cb11-8"><a href="#cb11-8"></a><span class="co">#&gt; Remaining: 0</span></span>
+<span id="cb11-9"><a href="#cb11-9"></a><span class="co">#&gt; </span></span></code></pre></div>
+<p>In order to reattempt processing of the ‘file3.txt’ and ‘file4.txt’ we need to set <code>failed = TRUE</code>.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">batch_run</span>(path, <span class="dt">failed =</span> <span class="ot">TRUE</span>, <span class="dt">ask =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">batch_report</span>(path)</span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="co">#&gt; ✓ file.txt [00:00:00.000]</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="co">#&gt; ✓ file2.txt [00:00:00.000]</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a><span class="co">#&gt; ✓ file3.txt [00:00:00.000]</span></span>
+<span id="cb13-5"><a href="#cb13-5"></a><span class="co">#&gt; ✓ file4.txt [00:00:00.003]</span></span>
+<span id="cb13-6"><a href="#cb13-6"></a><span class="co">#&gt; Success: 4</span></span>
+<span id="cb13-7"><a href="#cb13-7"></a><span class="co">#&gt; Failure: 0</span></span>
+<span id="cb13-8"><a href="#cb13-8"></a><span class="co">#&gt; Remaining: 0</span></span>
+<span id="cb13-9"><a href="#cb13-9"></a><span class="co">#&gt; </span></span></code></pre></div>
+</div>
+<div id="clean-up" class="section level2">
+<h2>Clean Up</h2>
+<p>With all the files successfully processed the only remaining task is to delete the hidden configuration and log files.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw">list.files</span>(path, <span class="dt">all.files =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="co">#&gt; [1] &quot;.&quot;           &quot;..&quot;          &quot;.batchr.log&quot; &quot;.batchr.rds&quot; &quot;file.txt&quot;   </span></span>
+<span id="cb14-3"><a href="#cb14-3"></a><span class="co">#&gt; [6] &quot;file2.txt&quot;   &quot;file3.txt&quot;   &quot;file4.txt&quot;</span></span>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="kw">print</span>(<span class="kw">batch_cleanup</span>(path))</span>
+<span id="cb14-5"><a href="#cb14-5"></a><span class="co">#&gt;    . </span></span>
+<span id="cb14-6"><a href="#cb14-6"></a><span class="co">#&gt; TRUE</span></span>
+<span id="cb14-7"><a href="#cb14-7"></a><span class="kw">list.files</span>(path, <span class="dt">all.files =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb14-8"><a href="#cb14-8"></a><span class="co">#&gt; [1] &quot;.&quot;         &quot;..&quot;        &quot;file.txt&quot;  &quot;file2.txt&quot; &quot;file3.txt&quot; &quot;file4.txt&quot;</span></span></code></pre></div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

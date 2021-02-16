@@ -1,0 +1,11 @@
+> batch_report(path)
+Message: ! file1.csv
+
+Message: Success: 0
+
+Message: Failure: 0
+
+Message: Remaining: 1
+
+Message: 
+
